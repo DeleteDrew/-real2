@@ -1,15 +1,41 @@
+"use client"
+
+import type React from "react"
+
+import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [isSearching, setIsSearching] = useState(false)
+  const [showDestruction, setShowDestruction] = useState(false)
+
+  const handleSearch = () => {
+    if (!searchQuery.trim()) return
+
+    setIsSearching(true)
+    setShowDestruction(true)
+
+    // After animation completes, redirect to signup
+    setTimeout(() => {
+      window.location.href = "/signup"
+    }, 4500) // Reduced from 5500ms to 4500ms
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearch()
+    }
+  }
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2 font-bold text-xl">
-            <span className="text-primary">Learn</span>
-            <span>AI</span>
+            <span className="text-primary">DeleteDrew.Net</span>
           </div>
           <nav className="flex gap-4 items-center">
             <Link href="/login" className="text-sm font-medium hover:underline">
@@ -33,58 +59,85 @@ export default function Home() {
                   There is a world of information at your finger tips. Just $0.99/month for unlimited access.
                 </p>
               </div>
-              <div className="space-x-4">
+
+              {/* Search Demo Section */}
+              <div className="w-full max-w-2xl space-y-4 mt-8">
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold">Try a sample search</h3>
+                  <p className="text-sm text-gray-500">Enter a topic to see how our platform works</p>
+                </div>
+
+                <div className="relative">
+                  {/* Main search container */}
+                  <div className={`search-container ${showDestruction ? "animate-epic-destruction" : ""}`}>
+                    <div className="flex items-center space-x-2 mb-4">
+                      <input
+                        className="search-input flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        placeholder="e.g., How does photosynthesis work?"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        disabled={isSearching}
+                      />
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Button
+                        className="search-button w-full sm:w-1/2"
+                        variant="outline"
+                        onClick={handleSearch}
+                        disabled={isSearching || !searchQuery.trim()}
+                      >
+                        {isSearching ? "Searching..." : "Teach Me"}
+                      </Button>
+                      <Button
+                        className="search-button w-full sm:w-1/2"
+                        variant="outline"
+                        onClick={handleSearch}
+                        disabled={isSearching || !searchQuery.trim()}
+                      >
+                        {isSearching ? "Searching..." : "Visual Learner"}
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Particle effects overlay */}
+                  {showDestruction && (
+                    <div className="particle-container">
+                      {[...Array(20)].map((_, i) => (
+                        <div
+                          key={i}
+                          className={`particle particle-${i}`}
+                          style={{
+                            left: `${Math.random() * 100}%`,
+                            animationDelay: `${Math.random() * 2}s`,
+                          }}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Explosion effect */}
+                  {showDestruction && (
+                    <div className="explosion-container">
+                      <div className="explosion-ring ring-1" />
+                      <div className="explosion-ring ring-2" />
+                      <div className="explosion-ring ring-3" />
+                    </div>
+                  )}
+                </div>
+
+                {!showDestruction && (
+                  <p className="text-xs text-center text-gray-500">Sign up for full access to our learning tools</p>
+                )}
+              </div>
+
+              <div className="space-x-4 mt-8">
                 <Link href="/signup">
                   <Button className="px-8">
                     Get Started
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="py-12 md:py-24 bg-white">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-              <div className="space-y-4">
-                <h2 className="text-3xl font-bold tracking-tighter md:text-4xl">How It Works</h2>
-                <p className="text-gray-500 md:text-xl">Our platform offers two ways to learn any topic:</p>
-                <ul className="space-y-2">
-                  <li className="flex items-center">
-                    <div className="mr-2 h-4 w-4 rounded-full bg-primary" />
-                    <span className="font-medium">"Teach Me" - Get AI-generated explanations instantly</span>
-                  </li>
-                  <li className="flex items-center">
-                    <div className="mr-2 h-4 w-4 rounded-full bg-primary" />
-                    <span className="font-medium">"Visual Learner" - Find the best YouTube tutorials</span>
-                  </li>
-                </ul>
-              </div>
-              <div className="rounded-lg border bg-gray-100 p-8">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold">Try a sample search</h3>
-                    <p className="text-sm text-gray-500">Enter a topic to see how our platform works</p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <input
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                      placeholder="e.g., How does photosynthesis work?"
-                      disabled
-                    />
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
-                    <Button className="w-full sm:w-1/2" variant="outline" disabled>
-                      Teach Me
-                    </Button>
-                    <Button className="w-full sm:w-1/2" variant="outline" disabled>
-                      Visual Learner
-                    </Button>
-                  </div>
-                  <p className="text-xs text-center text-gray-500">Sign up for full access to our learning tools</p>
-                </div>
               </div>
             </div>
           </div>
@@ -162,7 +215,7 @@ export default function Home() {
       </main>
       <footer className="border-t py-6 md:py-0">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
-          <p className="text-sm text-gray-500">© {new Date().getFullYear()} LearnAI. All rights reserved.</p>
+          <p className="text-sm text-gray-500">© {new Date().getFullYear()} DeleteDrew.Net. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/terms" className="text-sm text-gray-500 hover:underline">
               Terms

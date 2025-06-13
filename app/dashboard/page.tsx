@@ -8,8 +8,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/hooks/use-toast"
 import { Search, LogOut, User, Settings } from "lucide-react"
-import { searchYouTube } from "@/lib/youtube"
-import { generateAIResponse } from "@/lib/ai"
+import { searchVideos, searchAI } from "@/app/actions/search"
 
 // Add this function to convert markdown to HTML
 function markdownToHtml(markdown: string) {
@@ -59,13 +58,21 @@ export default function DashboardPage() {
 
     try {
       if (type === "teach") {
-        const response = await generateAIResponse(query)
-        setAIResponse(response)
-        setVideoResults([])
+        const result = await searchAI(query)
+        if (result.success) {
+          setAIResponse(result.data)
+          setVideoResults([])
+        } else {
+          throw new Error(result.error)
+        }
       } else {
-        const videos = await searchYouTube(query)
-        setVideoResults(videos)
-        setAIResponse("")
+        const result = await searchVideos(query)
+        if (result.success) {
+          setVideoResults(result.data)
+          setAIResponse("")
+        } else {
+          throw new Error(result.error)
+        }
       }
     } catch (error) {
       console.error("Search error:", error)

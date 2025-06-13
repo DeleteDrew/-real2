@@ -92,3 +92,329 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Epic Destruction Animation System */
+.search-container {
+  position: relative;
+  z-index: 10;
+}
+
+/* Main destruction animation */
+@keyframes epic-destruction {
+  /* Stage 1: Tension Build (0-10%) */
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: none;
+  }
+  2% {
+    transform: scale(1.01) rotate(0.2deg);
+    filter: brightness(1.1);
+  }
+  4% {
+    transform: scale(0.99) rotate(-0.2deg);
+    filter: brightness(0.9);
+  }
+  6% {
+    transform: scale(1.02) rotate(0.3deg);
+    filter: brightness(1.2) contrast(1.1);
+  }
+  8% {
+    transform: scale(0.98) rotate(-0.3deg);
+    filter: brightness(0.8) contrast(0.9);
+  }
+  10% {
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1) contrast(1);
+    box-shadow: 0 0 5px rgba(255, 0, 0, 0.3);
+  }
+
+  /* Stage 2: Initial Crack (10-25%) */
+  12% {
+    transform: scale(0.98) rotate(-1deg);
+    filter: brightness(0.9) contrast(1.1);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  }
+  15% {
+    transform: scale(1.03) rotate(1.5deg);
+    filter: brightness(1.1) contrast(1.2) blur(0.5px);
+    box-shadow: 0 0 15px rgba(255, 100, 0, 0.6);
+  }
+  18% {
+    transform: scale(0.95) rotate(-2deg);
+    filter: brightness(0.8) contrast(1.3) blur(1px);
+    box-shadow: 0 0 20px rgba(255, 150, 0, 0.7);
+  }
+  22% {
+    transform: scale(1.05) rotate(2.5deg);
+    filter: brightness(1.2) contrast(1.4) blur(1.5px);
+    box-shadow: 0 0 25px rgba(255, 200, 0, 0.8);
+  }
+  25% {
+    transform: scale(0.9) rotate(-3deg);
+    filter: brightness(0.7) contrast(1.5) blur(2px);
+    box-shadow: 0 0 30px rgba(255, 255, 0, 0.9);
+  }
+
+  /* Stage 3: Violent Shaking & Breaking (25-45%) */
+  27% {
+    transform: scale(0.85) rotate(4deg);
+    filter: brightness(0.6) contrast(1.6) blur(3px) saturate(1.5);
+    box-shadow: 0 0 35px rgba(255, 255, 100, 1);
+  }
+  30% {
+    transform: scale(1.1) rotate(-5deg);
+    filter: brightness(1.3) contrast(1.7) blur(2px) saturate(1.8);
+    box-shadow: 0 0 40px rgba(255, 255, 200, 1);
+  }
+  33% {
+    transform: scale(0.8) rotate(6deg);
+    filter: brightness(0.5) contrast(1.8) blur(4px) saturate(2);
+    box-shadow: 0 0 45px rgba(255, 255, 255, 1);
+  }
+  36% {
+    transform: scale(1.15) rotate(-7deg);
+    filter: brightness(1.4) contrast(1.9) blur(3px) saturate(2.2);
+  }
+  40% {
+    transform: scale(0.7) rotate(8deg);
+    filter: brightness(0.4) contrast(2) blur(5px) saturate(2.5);
+  }
+  45% {
+    transform: scale(0.6) rotate(-10deg);
+    filter: brightness(0.3) contrast(2.1) blur(6px) saturate(3);
+  }
+
+  /* Stage 4: Fragmentation (45-70%) */
+  50% {
+    transform: scale(0.5) rotate(15deg);
+    filter: brightness(0.2) contrast(1.5) blur(8px) saturate(2) sepia(0.2);
+    opacity: 0.8;
+  }
+  55% {
+    transform: scale(0.4) rotate(-20deg);
+    filter: brightness(0.15) contrast(1) blur(10px) saturate(1.5) sepia(0.4);
+    opacity: 0.6;
+  }
+  60% {
+    transform: scale(0.3) rotate(25deg);
+    filter: brightness(0.1) contrast(0.5) blur(12px) saturate(1) sepia(0.6);
+    opacity: 0.4;
+  }
+  65% {
+    transform: scale(0.2) rotate(-30deg);
+    filter: brightness(0.05) contrast(0.2) blur(15px) saturate(0.5) sepia(0.8);
+    opacity: 0.3;
+  }
+  70% {
+    transform: scale(0.15) rotate(35deg);
+    filter: brightness(0.02) contrast(0.1) blur(18px) saturate(0.2) sepia(1);
+    opacity: 0.2;
+  }
+
+  /* Stage 5: Disintegration to Ash (70-100%) */
+  75% {
+    transform: scale(0.1) rotate(-40deg);
+    filter: brightness(0.01) contrast(0.05) blur(20px) saturate(0.1) sepia(1) hue-rotate(30deg);
+    opacity: 0.15;
+  }
+  80% {
+    transform: scale(0.08) rotate(45deg);
+    filter: brightness(0.005) contrast(0.02) blur(22px) saturate(0.05) sepia(1) hue-rotate(45deg);
+    opacity: 0.1;
+  }
+  85% {
+    transform: scale(0.05) rotate(-50deg);
+    filter: brightness(0.002) contrast(0.01) blur(25px) saturate(0.02) sepia(1) hue-rotate(60deg);
+    opacity: 0.08;
+  }
+  90% {
+    transform: scale(0.03) rotate(55deg);
+    filter: brightness(0.001) contrast(0.005) blur(28px) saturate(0.01) sepia(1) hue-rotate(75deg);
+    opacity: 0.05;
+  }
+  95% {
+    transform: scale(0.01) rotate(-60deg);
+    filter: brightness(0) contrast(0) blur(30px) saturate(0) sepia(1) hue-rotate(90deg);
+    opacity: 0.02;
+  }
+  100% {
+    transform: scale(0) rotate(90deg);
+    filter: brightness(0) contrast(0) blur(35px) saturate(0) sepia(1) hue-rotate(120deg);
+    opacity: 0;
+  }
+}
+
+.animate-epic-destruction {
+  animation: epic-destruction 4.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Particle System */
+.particle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(45deg, #ff6b35, #f7931e, #ffd700);
+  border-radius: 50%;
+  animation: particle-float 2.5s ease-out forwards;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-100px) translateX(var(--random-x, 0)) scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-200px) translateX(var(--random-x, 0)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Generate random particle movements */
+.particle-0 {
+  --random-x: -50px;
+  animation-delay: 0.1s;
+}
+.particle-1 {
+  --random-x: 30px;
+  animation-delay: 0.2s;
+}
+.particle-2 {
+  --random-x: -20px;
+  animation-delay: 0.15s;
+}
+.particle-3 {
+  --random-x: 60px;
+  animation-delay: 0.3s;
+}
+.particle-4 {
+  --random-x: -80px;
+  animation-delay: 0.25s;
+}
+.particle-5 {
+  --random-x: 40px;
+  animation-delay: 0.35s;
+}
+.particle-6 {
+  --random-x: -30px;
+  animation-delay: 0.4s;
+}
+.particle-7 {
+  --random-x: 70px;
+  animation-delay: 0.45s;
+}
+.particle-8 {
+  --random-x: -60px;
+  animation-delay: 0.5s;
+}
+.particle-9 {
+  --random-x: 20px;
+  animation-delay: 0.55s;
+}
+.particle-10 {
+  --random-x: -40px;
+  animation-delay: 0.6s;
+}
+.particle-11 {
+  --random-x: 80px;
+  animation-delay: 0.65s;
+}
+.particle-12 {
+  --random-x: -70px;
+  animation-delay: 0.7s;
+}
+.particle-13 {
+  --random-x: 50px;
+  animation-delay: 0.75s;
+}
+.particle-14 {
+  --random-x: -90px;
+  animation-delay: 0.8s;
+}
+.particle-15 {
+  --random-x: 10px;
+  animation-delay: 0.85s;
+}
+.particle-16 {
+  --random-x: -10px;
+  animation-delay: 0.9s;
+}
+.particle-17 {
+  --random-x: 90px;
+  animation-delay: 0.95s;
+}
+.particle-18 {
+  --random-x: -50px;
+  animation-delay: 1s;
+}
+.particle-19 {
+  --random-x: 35px;
+  animation-delay: 1.1s;
+}
+
+/* Explosion Ring Effects */
+.explosion-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 15;
+}
+
+.explosion-ring {
+  position: absolute;
+  border: 2px solid;
+  border-radius: 50%;
+  animation: explosion-expand 1.5s ease-out forwards;
+}
+
+.ring-1 {
+  border-color: rgba(255, 107, 53, 0.8);
+  animation-delay: 0.5s;
+}
+
+.ring-2 {
+  border-color: rgba(247, 147, 30, 0.6);
+  animation-delay: 0.7s;
+}
+
+.ring-3 {
+  border-color: rgba(255, 215, 0, 0.4);
+  animation-delay: 0.9s;
+}
+
+@keyframes explosion-expand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+    border-width: 3px;
+  }
+  50% {
+    width: 200px;
+    height: 200px;
+    opacity: 0.8;
+    border-width: 2px;
+  }
+  100% {
+    width: 400px;
+    height: 400px;
+    opacity: 0;
+    border-width: 1px;
+  }
+}

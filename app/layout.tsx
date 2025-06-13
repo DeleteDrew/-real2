@@ -6,9 +6,9 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "LearnAI - AI-Powered Learning Platform",
-  description: "Learn anything with AI explanations and curated video tutorials for just $0.99/month",
-    generator: 'v0.dev'
+  title: "DeleteDrew.Net - Information at Your Fingertips",
+  description: "There is a world of information at your finger tips for just $0.99/month",
+  generator: "v0.dev",
 }
 
 export default function RootLayout({
