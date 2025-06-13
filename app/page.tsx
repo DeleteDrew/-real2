@@ -27,11 +27,10 @@ export default function Home() {
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
-                  Learn Anything with AI
+                  DeleteDrew.Net
                 </h1>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                  Get instant answers or find the perfect video tutorial for any topic. Just $0.99/month for unlimited
-                  access.
+                  There is a world of information at your finger tips. Just $0.99/month for unlimited access.
                 </p>
               </div>
               <div className="space-x-4">

@@ -89,8 +89,7 @@ export default function DashboardPage() {
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2 font-bold text-xl">
-            <span className="text-primary">Learn</span>
-            <span>AI</span>
+            <span className="text-primary">DeleteDrew.Net</span>
           </Link>
           <nav className="flex gap-4 items-center">
             <Link href="/account" className="text-sm font-medium hover:underline flex items-center gap-1">
@@ -188,7 +187,7 @@ export default function DashboardPage() {
                       <Card key={index} className="overflow-hidden">
                         <div className="aspect-video w-full">
                           <img
-                            src={`/placeholder.svg?height=180&width=320&text=Video+${index + 1}`}
+                            src={video.thumbnail || "/placeholder.svg"}
                             alt={video.title}
                             className="h-full w-full object-cover"
                           />

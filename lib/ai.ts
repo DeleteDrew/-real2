@@ -8,12 +8,21 @@ export async function generateAIResponse(query: string): Promise<string> {
 
     // If we have an API key, use the real OpenAI integration
     if (apiKey) {
+      console.log("API Key available:", !!apiKey)
+      console.log("Query:", query)
+
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+
       const { text } = await generateText({
         model: openai("gpt-4o"),
         prompt: query,
         system:
           "You are a helpful educational assistant. Provide clear, concise, and accurate information about the topic. Format your response in a way that's easy to understand, using paragraphs, bullet points, and examples where appropriate.",
+        abortSignal: controller.signal,
       })
+
+      clearTimeout(timeoutId)
       return text
     }
 
