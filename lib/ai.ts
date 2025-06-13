@@ -1,6 +1,5 @@
 import { generateText } from "ai"
 import { openai } from "@ai-sdk/openai"
-import { searchWithGemini, searchWithHuggingFace } from "./ai-alternatives"
 
 export async function generateAIResponse(query: string): Promise<string> {
   try {
@@ -37,6 +36,130 @@ export async function generateAIResponse(query: string): Promise<string> {
   }
 }
 
+// Google Gemini (FREE - 1,500 requests per day!) - FIXED VERSION
+async function searchWithGemini(query: string): Promise<string> {
+  try {
+    const API_KEY = process.env.GEMINI_API_KEY
+
+    if (!API_KEY) {
+      throw new Error("No Gemini API key found")
+    }
+
+    // Updated to use the correct model name and API version
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                {
+                  text: `You are a helpful educational assistant. Provide clear, concise, and accurate information about: ${query}. Format your response using markdown with headers, bullet points, and examples where appropriate. Make it educational and easy to understand.`,
+                },
+              ],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.7,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 1024,
+          },
+          safetySettings: [
+            {
+              category: "HARM_CATEGORY_HARASSMENT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE",
+            },
+            {
+              category: "HARM_CATEGORY_HATE_SPEECH",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE",
+            },
+            {
+              category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE",
+            },
+            {
+              category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE",
+            },
+          ],
+        }),
+      },
+    )
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error("Gemini API Error Response:", errorText)
+      throw new Error(`Gemini API error: ${response.status} - ${errorText}`)
+    }
+
+    const data = await response.json()
+    console.log("Gemini API Response:", JSON.stringify(data, null, 2))
+
+    if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
+      console.error("Invalid Gemini response structure:", data)
+      throw new Error("Invalid response from Gemini API")
+    }
+
+    const content = data.candidates[0].content.parts[0].text
+    console.log("Gemini response content:", content)
+    return content
+  } catch (error) {
+    console.error("Gemini search error:", error)
+    throw error
+  }
+}
+
+// Hugging Face (FREE with rate limits)
+async function searchWithHuggingFace(query: string): Promise<string> {
+  try {
+    const API_KEY = process.env.HUGGINGFACE_API_KEY
+
+    if (!API_KEY) {
+      throw new Error("No Hugging Face API key found")
+    }
+
+    // Using a better model for text generation
+    const response = await fetch("https://api-inference.huggingface.co/models/microsoft/DialoGPT-large", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        inputs: `Educational question: ${query}\n\nProvide a clear, educational explanation with examples:`,
+        parameters: {
+          max_length: 500,
+          temperature: 0.7,
+          do_sample: true,
+        },
+      }),
+    })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error("Hugging Face API Error:", errorText)
+      throw new Error(`Hugging Face API error: ${response.status} - ${errorText}`)
+    }
+
+    const data = await response.json()
+    console.log("Hugging Face response:", data)
+
+    if (Array.isArray(data) && data[0] && data[0].generated_text) {
+      return data[0].generated_text
+    }
+
+    throw new Error("Invalid response from Hugging Face API")
+  } catch (error) {
+    console.error("Hugging Face search error:", error)
+    throw error
+  }
+}
+
 // Mock implementation that doesn't require an API key
 function generateMockResponse(query: string): string {
   return `# ${query}
@@ -49,7 +172,7 @@ To enable real AI responses, set up one of these **FREE** API keys:
 
 ### 1. Google Gemini (Recommended - Completely Free!)
 - **15 requests/minute, 1,500/day** - Perfect for your needs!
-- Get your free key: https://makersuite.google.com/app/apikey
+- Get your free key: https://aistudio.google.com/app/apikey
 - Add to .env.local: \`GEMINI_API_KEY=your_key_here\`
 
 ### 2. Hugging Face (Free Tier)
